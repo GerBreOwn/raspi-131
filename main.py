@@ -4,13 +4,17 @@ from time import sleep
 import statistics
 
 # wind_count = 17
-import gpiozero
-from gpiozero import Button
+# import gpiozero
+# from gpiozero import Button
 
 radius_in = 3.0
+radius_cm = radius_in * 2.5
 wind_interval = 5
 # wind_speed_sensor = gpiozero.Button(5)
 wind_count = 0
+secs_in_an_hour = 3600
+cm_in_a_km = 100000
+in_in_a_mile = 63360
 
 store_wind_speeds = []
 store_temp = []
@@ -34,12 +38,12 @@ def bme280a():
         store_humidity.append(humidity)
         pressure = randrange(60, 100) # bme280_data.pressure
         store_pressure.append(pressure)
-        print("Temp", temperature, "HUM", humidity, "PRES", pressure)
-        print("Max T", max(store_temp))
+        # print("Temp", temperature, "HUM", humidity, "PRES", pressure)
+        #print("Total Temps", store_temp)
+        #print("Max T", max(store_temp))
         print("Avg T", statistics.mean(store_temp) )
-        print("Max Hu",max(store_humidity))
-        print("Max Pre", max(store_pressure))
-        print('AVG', avg)
+        #print("Max Hu",max(store_humidity))
+        #print("Max Pre", max(store_pressure))
         sleep(1)
 
 def reset_wind():
@@ -47,17 +51,30 @@ def reset_wind():
 
 class Wind():
     def spin(self):
+        global wind_count
         wind_count += 1
         return wind_count
 
     def calc_speed(time_sec):
         global wind_count
         global wind_speed
+        #circfm_cm = (2 * math.pi) * radius_cm
         circfm_in = (2 * math.pi) * radius_in
+
         rotations = wind_count / 2.0
-        dist_in = circfm_in * rotations
-        wind_speed = dist_in / time_sec
-        return wind_speed
+
+        #dist_km = (circfm_cm * rotations) / cm_in_a_km
+        dist_mi = circfm_in * rotations / in_in_a_mile
+
+        #km_per_sec = dist_km / time_sec
+        #km_per_hr = km_per_sec * secs_in_an_hour
+
+        in_per_sec = dist_mi / time_sec
+        mph = in_per_sec * secs_in_an_hour
+
+        #return km_per_hr
+        return mph
+
 
 # wind_speed_sensor.when_pressed = Wind.spin()
 """
