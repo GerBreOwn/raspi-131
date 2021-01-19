@@ -1,5 +1,7 @@
-import psycopg2
+
 from config import config
+import psycopg2
+
 
 def connect():
     conn = None
@@ -17,6 +19,7 @@ def connect():
     finally:
         if conn is not None:
             conn.close()
+
 
 if __name__ == '__main__':
     connect()
