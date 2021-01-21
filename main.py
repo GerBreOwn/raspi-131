@@ -26,7 +26,7 @@ while True:
 
     class Rain:
         store_rain = []
-        print("Rain")
+        #print("Rain")
         for i in range(11):
             #def bucket_tipped(self):
             rain_count = randrange(0, 50)  # 0
@@ -44,7 +44,7 @@ while True:
 
 
     class Bme280:
-        print("bme280")
+        #print("bme280")
         store_temp = []
         store_humidity = []
         store_pressure = []
@@ -72,16 +72,14 @@ while True:
             store_record[0] = temper
             store_record[1] = press
             store_record[2] = humid
-#print("Rec =", store_record)
-# def reset_wind(self):
-    #    wind_count = 0
 
 
     class Wind:
+        wind_count = 0
         store_wind_speeds = []
         store_wind_direct = []
         store_wind_gust = []
-        print("Wind")
+        #print("Wind")
         for i in range(11):
             def spin(self):
                 global wind_count
@@ -123,8 +121,6 @@ while True:
 
     class WriteData:
         conn = psycopg2.connect("user=gerald dbname=weather host=192.168.1.142 password=CasC#373")
-        #    except:
-        #       print("Unable to connect to the database.")
 
         conn.autocommit = True
         cursor = conn.cursor()
@@ -151,7 +147,6 @@ while True:
                                      store_record[5],
                                      store_record[6]
                                      ))
-        print("rec wrote", store_record)
 
     sleep(10.0)
 
